@@ -1,6 +1,10 @@
 /* Add styles for the Header */
 
 /* Add styles for the Main Body */
+main {
+    display: flex;
+    justify-content: space-evenly;
+}
 
 /* If we'll have a footer or results area, style them here */
 
