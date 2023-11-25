@@ -10,13 +10,14 @@ var answerSection = document.getElementById('answerSection');
 
 //Create the variable object of the questions and its correct answer:
 var questions = [
-    {question1: 'What is 2 + 2',
+    {question: 'What is 2 + 2',
+    options: ['4', '6', '7', '1',],
     correctAnswer: '4',
     },
-    {question2: 'What is 4 + 4',
+    {question: 'What is 4 + 4',
     correctAnswer: '8',
     },
-    {question3: 'What is 5 + 5',
+    {question: 'What is 5 + 5',
     correctAnswer: '10',
     },
 ];
@@ -40,7 +41,9 @@ function startGame() {
     //Append to the webpage to hide center section and display my questions.
     landingSection.setAttribute('style', 'display: none;');
     questionSection.setAttribute('style', 'display: block;');
-    questionSection.textContent = questions[0].question1;
+    answerSection.setAttribute('style', 'display: block;');
+    questionSection.textContent = questions[0].question;
+    answerSection.textContent = questions[0].options;
 }
 
 //Create functions to provide results from user input
