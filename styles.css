@@ -3,7 +3,7 @@
 /* Add styles for the Main Body */
 main {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
 /* If we'll have a footer or results area, style them here */
