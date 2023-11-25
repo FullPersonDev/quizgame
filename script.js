@@ -2,9 +2,11 @@
 var start = document.getElementById('start');
 var time = document.getElementById('time');
 var mainSection = document.getElementById('main');
+var gameContainer = document.getElementById('gameContainer');
 var landingSection = document.getElementById('landingSection');
 var questionSection = document.getElementById('questionSection');
 var answerSection = document.getElementById('answerSection');
+var resultSection = document.getElementById('resultSection');
 
 //Create variables to capture user input
 
@@ -40,10 +42,10 @@ function startGame() {
     countDown();
     //Append to the webpage to hide center section and display my questions.
     landingSection.setAttribute('style', 'display: none;');
-    questionSection.setAttribute('style', 'display: block;');
-    answerSection.setAttribute('style', 'display: block;');
+    gameContainer.setAttribute('style', 'display: block;');
     questionSection.textContent = questions[0].question;
     answerSection.textContent = questions[0].options;
+    resultSection.textContent = 'Correct!';
 }
 
 //Create functions to provide results from user input

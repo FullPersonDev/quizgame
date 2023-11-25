@@ -1,11 +1,21 @@
-/* Add styles for the Header */
-
 /* Add styles for the Main Body */
 main {
     display: flex;
     justify-content: space-between;
 }
+/* Styles for the question and answer sections */
+#questionSection {
+    font-size: 25px;
+    height: 150px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+#answerSection {
+    font-size: 25px;
+    height: 250px;
+}
 
 /* If we'll have a footer or results area, style them here */
+
 
 /* Add styles for media query at different screen sizes */
