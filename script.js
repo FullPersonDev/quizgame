@@ -49,6 +49,8 @@ function startGame() {
     displayQuestion();
 
     //Setting up the internal functions that power the startGame() main function
+
+    //Set up countDown to start the timer
     function countDown() {
         var timeInterval = setInterval(function() {
             timeLeft--;
@@ -75,16 +77,26 @@ function startGame() {
                 var button = document.createElement('button');
                 button.textContent = options;
                 button.addEventListener('click', function() {
-                    checkAnswer(choice, questions.correctAnswer);
+                    checkAnswer(options, questions.correctAnswer);
                 });
                 answerSection.appendChild(button);
             }
         );
     }
 
-}
+    //Set up function to check the user's answer
+    function checkAnswer(options, correctAnswer) {
+        if (options !== correctAnswer) {
+            timeLeft -= 10;
+        }
+        currentQuestionIndex++;
+        nextQuestion();
+        displayQuestion();
+    }
 
-//Create functions to provide results from user input
+    //create and ending game function
+
+}
 
 //Create event listeners
 start.addEventListener('click', startGame);
