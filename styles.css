@@ -1,4 +1,7 @@
 /* Add styles for the Main Body */
+body {
+    font-size: 18px;
+}
 main {
     display: flex;
     justify-content: space-between;
@@ -13,6 +16,22 @@ main {
 #answerSection {
     font-size: 25px;
     height: 250px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+button {
+    height: 50px;
+    width: 150px;
+    font-size: 18px;
+    border: none;
+    border-radius: 20%;
+}
+button:hover {
+    background-color: gold;
+}
+button:active {
+    box-shadow: 0 0 10px gray;
 }
 
 /* If we'll have a footer or results area, style them here */
