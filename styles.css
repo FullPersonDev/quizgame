@@ -33,8 +33,3 @@ button:hover {
 button:active {
     box-shadow: 0 0 10px gray;
 }
-
-/* If we'll have a footer or results area, style them here */
-
-
-/* Add styles for media query at different screen sizes */

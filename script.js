@@ -8,33 +8,34 @@ var questionSection = document.getElementById('questionSection');
 var answerSection = document.getElementById('answerSection');
 var resultSection = document.getElementById('resultSection');
 
+//Create quiz global variables
+var timeLeft = 80;
+var timeInterval;
+var finalScore;
+var currentQuestionIndex = 0;
 
 //Create the variable object for the questions, answer options, and correct answer:
 var questions = [
     {question: 'The condition of the If statement is enclosed in _____.',
     options: ['square brackets', 'commas', 'parenthesis', 'curly brackets'],
-    correctAnswer: 'parenthesis',
+    correctAnswer: 'parenthesis'
     },
     {question: 'What do x and y represent within this function, function mathAdd (x, y)?',
     options: ['parameters', 'variables', 'extra power'],
-    correctAnswer: 'parameters',
+    correctAnswer: 'parameters'
     },
     {question: 'You can have Arrays inside an Object',
     options: ['false', 'true'],
-    correctAnswer: 'true',
+    correctAnswer: 'true'
     },
     {question: 'When writing a for loop, what does the i++ mean?',
     options: ['increase the iteration by 2','increase the iteration by 1', 'we never use i++'],
-    correctAnswer: 'increase the iteration by 1',
+    correctAnswer: 'increase the iteration by 1'
     }
 ];
 
 
-//Create global variables
-var timeLeft = 80;
-var currentQuestionIndex = 0;
-
-//Created the main function startGame() and its internal functions that will run the game
+//Created the main function startGame() and its 6 internal functions that will run the game
 function startGame() {
     //variables move to local scope inside the startGame function
     timeLeft = 80;
@@ -43,28 +44,29 @@ function startGame() {
     greetingSection.setAttribute('style', 'display: none;');
     gameContainer.setAttribute('style', 'display: block;');
 
-    //Calling out the internal functions that power the startGame() main function
+
+    /*Calling out the 2 initial functions to start off the game.
+    Start the timer and provide the next question.*/
     countDown();
     nextQuestion();
-    displayQuestion();
 
-    //Setting up the internal functions that power the startGame() main function
+    //Setting up the internal functions that power the startGame() parent function
 
-    /*Set up countDown function to start the timer, with IF statement to clear interval
+    /*Here the countDown function to start the timer, with IF statement to clear interval
     and end game if at 0 seconds or last question*/
     function countDown() {
-        var timeInterval = setInterval(function() {
-            timeLeft--;
-            time.textContent = timeLeft;
+        timeInterval = setInterval(function() {
+        timeLeft--;
+        time.textContent = timeLeft;
 
-            if (timeLeft === 0 || currentQuestionIndex === questions.length) {
+        if (timeLeft === 0 || currentQuestionIndex === questions.length) {
                 clearInterval(timeInterval);
                 endGame();
-            }
+        }
         }, 1000);
     }
 
-    //Set up next question function with condition statement to: continue or end game.
+    //Here the next question function with condition statement to: continue or end game.
     function nextQuestion() {
         resetOptions();
         if (currentQuestionIndex < questions.length) {
@@ -73,25 +75,21 @@ function startGame() {
     }
     /*Display next question with options as buttons
     and a click event listener to the button to check for the correct answer*/
-    function displayQuestion (questions) {
+    function displayQuestion(questions) {
         questionSection.textContent = questions.question;
-        for (var i = 0; i < questions.options.length; i++) {
-            var option = questions.options[i];
+        //create the for each loop to create the buttons and keep the event listener at each button
+        questions.options.forEach(function (option) {
             var button = document.createElement('button');
-
             button.textContent = option;
+            answerSection.appendChild(button);
 
-            button.addEventListener('click', function(){
+            button.addEventListener('click', function (){
                 checkAnswer(option, questions.correctAnswer);
             });
-
-            //append the option buttons as children in the answers container
-            answerSection.appendChild(button);
-        }
+        });
     }
-
-    /*Set up function to remove answers with a while loop
-    by a way of basically removing the first child (buttons) of the answer container
+    /*Here I created a function to remove answers with a while loop
+    by a way of removing the first child (buttons) of the answer container
     until there is no children left*/
     function resetOptions() {
         while (answerSection.firstChild) {
@@ -99,19 +97,33 @@ function startGame() {
         }
     }
 
-    //Set up function to check the user's answer
-    function checkAnswer(options, correctAnswer) {
-        if (options !== correctAnswer) {
+    //Here is the function to check the user's answer. Deduct 10 seconds if wrong.
+    function checkAnswer(option, correctAnswer) {
+        if (option === correctAnswer) {
+            console.log('Correct')
+            resultSection.setAttribute('style', 'display: block');
+            resultSection.textContent = 'Correct!';
+            resultSection.textContent = '';
+        }else {
+            console.log('Wrong')
+            resultSection.setAttribute('style', 'display: block');
+            resultSection.textContent = 'Wrong!';
+            resultSection.textContent = '';
             timeLeft -= 10;
         }
         currentQuestionIndex++;
         nextQuestion();
-        displayQuestion();
     }
 
-    //create and ending game function
-
+    //This is the game ending function. Displays the user's final score as timeleft
+    function endGame() {
+        questionSection.setAttribute('style', 'display: none');
+        answerSection.setAttribute('style', 'display: none');
+        resultSection.setAttribute('style', 'display: block');
+        resultSection.textContent = 'Your final score is: ' + timeLeft;
+    }
 }
+
 
 //Create event listeners
 start.addEventListener('click', startGame);
