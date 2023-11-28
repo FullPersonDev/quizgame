@@ -2,55 +2,56 @@
 var start = document.getElementById('start');
 var time = document.getElementById('time');
 var mainSection = document.getElementById('main');
+var greetingSection = document.getElementById('greetingSection');
 var gameContainer = document.getElementById('gameContainer');
-var landingSection = document.getElementById('landingSection');
 var questionSection = document.getElementById('questionSection');
 var answerSection = document.getElementById('answerSection');
 var resultSection = document.getElementById('resultSection');
 
-//Create variables to capture user input
 
-//Create the variable object for the questions and its correct answer:
+//Create the variable object for the questions, answer options, and correct answer:
 var questions = [
     {question: 'The condition of the If statement is enclosed in _____.',
-    options: ['square brackets', 'commas', 'parenthesis', 'curly brackets',],
+    options: ['square brackets', 'commas', 'parenthesis', 'curly brackets'],
     correctAnswer: 'parenthesis',
     },
-    {question: 'What is 4 + 4',
-    options: [],
-    correctAnswer: '8',
+    {question: 'What do x and y represent within this function, function mathAdd (x, y)?',
+    options: ['parameters', 'variables', 'extra power'],
+    correctAnswer: 'parameters',
     },
-    {question: 'What is 5 + 5',
-    options: [],
-    correctAnswer: '10',
+    {question: 'You can have Arrays inside an Object',
+    options: ['false', 'true'],
+    correctAnswer: 'true',
     },
-    {question: 'What is 10 + 10',
-    options: [],
-    correctAnswer: '20',
+    {question: 'When writing a for loop, what does the i++ mean?',
+    options: ['increase the iteration by 2','increase the iteration by 1', 'we never use i++'],
+    correctAnswer: 'increase the iteration by 1',
     }
 ];
 
 
-//Create functions to start game and handle user input
+//Create global variables
 var timeLeft = 80;
 var currentQuestionIndex = 0;
 
 //Created the main function startGame() and its internal functions that will run the game
 function startGame() {
+    //variables move to local scope inside the startGame function
     timeLeft = 80;
     currentQuestionIndex = 0;
-    //Append to the webpage to hide center section and display my questions and options
-    landingSection.setAttribute('style', 'display: none;');
+    //Append to the webpage to hide 'greetingsection' and display 'questions and options'
+    greetingSection.setAttribute('style', 'display: none;');
     gameContainer.setAttribute('style', 'display: block;');
 
-    //Calling out these internal functions that power the startGame() main function
+    //Calling out the internal functions that power the startGame() main function
     countDown();
     nextQuestion();
     displayQuestion();
 
     //Setting up the internal functions that power the startGame() main function
 
-    //Set up countDown to start the timer
+    /*Set up countDown function to start the timer, with IF statement to clear interval
+    and end game if at 0 seconds or last question*/
     function countDown() {
         var timeInterval = setInterval(function() {
             timeLeft--;
@@ -63,25 +64,39 @@ function startGame() {
         }, 1000);
     }
 
-    //Set up next question with condition statement to: continue or end game.
+    //Set up next question function with condition statement to: continue or end game.
     function nextQuestion() {
+        resetOptions();
         if (currentQuestionIndex < questions.length) {
             displayQuestion(questions[currentQuestionIndex]);
         } else {endGame();}
     }
-    //Display next question with options as buttons
+    /*Display next question with options as buttons
+    and a click event listener to the button to check for the correct answer*/
     function displayQuestion (questions) {
         questionSection.textContent = questions.question;
-        questions.options.forEach(
-            function (options, index) {
-                var button = document.createElement('button');
-                button.textContent = options;
-                button.addEventListener('click', function() {
-                    checkAnswer(options, questions.correctAnswer);
-                });
-                answerSection.appendChild(button);
-            }
-        );
+        for (var i = 0; i < questions.options.length; i++) {
+            var option = questions.options[i];
+            var button = document.createElement('button');
+
+            button.textContent = option;
+
+            button.addEventListener('click', function(){
+                checkAnswer(option, questions.correctAnswer);
+            });
+
+            //append the option buttons as children in the answers container
+            answerSection.appendChild(button);
+        }
+    }
+
+    /*Set up function to remove answers with a while loop
+    by a way of basically removing the first child (buttons) of the answer container
+    until there is no children left*/
+    function resetOptions() {
+        while (answerSection.firstChild) {
+            answerSection.removeChild(answerSection.firstChild);
+        }
     }
 
     //Set up function to check the user's answer
